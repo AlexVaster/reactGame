@@ -1,0 +1,21 @@
+.field {
+    display: flex; 
+    flex-direction: column;
+    gap: 1px;
+}
+
+.fieldRow {
+    display: flex;
+    flex-direction: row;
+    gap: 1px;
+}
+
+.square {
+    border: solid;
+    border-width: 1px;
+    font-size: 40px;
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    font-weight: bold;
+}
