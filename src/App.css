@@ -4,6 +4,18 @@
     font-family: "Roboto", sans-serif;
 }
 
+li {
+    font-size: 20px;
+    height: 30px;
+}
+
+button {
+    width: 230px;
+    height: 28px;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
 .App {
     height: 600px;
     display: flex;
@@ -18,7 +30,7 @@
 }
 
 .status-screen {
-    font-size: 30px;
+    font-size: 20px;
 }
 
 .square {
@@ -46,7 +58,7 @@
     justify-content: center;
     grid-gap: 5px;
 }
-  
+
 .player-turn {
     color: #01233d;
     font-size: 2rem;
