@@ -10,15 +10,14 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "^5.0.1",
-    "typescript": "^5.0.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "build": "tsc",
+    "test": "jest",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -40,6 +39,12 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^5.0.0"
+    "@babel/preset-typescript": "^7.21.0",
+    "@jest/globals": "^29.5.0",
+    "@types/jest": "^29.5.0",
+    "gh-pages": "^5.0.0",
+    "jest": "^27.5.1",
+    "ts-jest": "^29.0.5",
+    "typescript": "^5.0.2"
   }
 }
