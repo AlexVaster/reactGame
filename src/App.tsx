@@ -13,17 +13,16 @@ const winCombo = [
 	[2, 4, 6],
 ];
 
-export const Game = () => {
-	type GameStep = {
-		squareArr: string[],
-		player: string,
-		finish: boolean,
-		draw: boolean
-	}
+type GameStep = {
+	squareArr: string[],
+	player: string,
+	finish: boolean,
+	draw: boolean
+}
 
+export function Game () {
 	const initial: GameStep[] = [{squareArr: Array(9).fill(''), player: 'O', finish: false, draw: false}];
 	const [hist, setHist] = useState(initial);
-
 
    // Перебор победных комбинаций
 	const isGameOver = () => {
@@ -64,61 +63,68 @@ export const Game = () => {
    		}
   	};
 
-  	const Board = () => {
-    	return (
-      	<div className='board'>
-        	{hist.at(-1)?.squareArr.map((item: string, index: number) => 
-          		(<button 
-            		key={index} 
-            		className={'square' + (hist.at(-1)?.squareArr.at(index) !== '' ? ' clicked' : '')} 
-            		onClick={() => updateHist(index)}>{item}</button>)
-        		)}
-      	</div>
-    	)
-  	}
-
-  const Status = () => {
-    return (
-    	<div className="status-screen" role='status'>
-        	<span>{hist.at(-1).draw ? 
-        	'Ничья!' 
-        	: (hist.at(-1).finish ? ('Победил игрок ' + hist.at(-1).player) : ('Ходит игрок: ' + hist.at(-1).player))
-        	}
-        	</span>
-        	<History />
-    	</div>);
-  	}
-
-	const History = () => {
-    	const handleButton = (id: number) => {
-    		updateHist(id, true);
-    	};
-
-    	return (
-    		<div className='history'>
-        		<ol>
-          			{hist.map((item: GameStep, index: number) => 
-            			<li key={index}>
-              				<button onClick={() => handleButton(index)}>
-            				go to game 
-              				{index === 0 ? ' start': ' move #' + index}
-              				</button>
-            			</li>)}
-       			</ol>
-      		</div>
-    	)
-  	}
-
 	return (
     	<div className='game'>
-      		<Board />
-      		<Status />
+      		<Board updateHist={updateHist} squareArr={hist.at(-1)?.squareArr}/>
+      		<Status updateHist={updateHist} hist={hist}/>
     	</div>
-  	)
+  	);
+};
+
+export function Square (prop) {
+	return (
+		<button
+			key={prop.index} 
+			className='square'
+      onClick={() => prop.updateHist(prop.index)}>{prop.item}</button>
+	);
+};
+
+export function Board (prop) {
+	return (
+		<div className='board'>
+			{prop.squareArr.map((item: string, index: number) => 
+				<Square updateHist={prop.updateHist} item={item} index={index}/>
+				)}
+		</div>
+	)
 }
 
+export function Status (prop) {
+	return (
+		<div className="status-screen" role='status'>
+				<span>{prop.hist.at(-1).draw ? 'Ничья!' 
+					: (prop.hist.at(-1).finish ? 
+							('Победил игрок ' + prop.hist.at(-1).player) : 
+							('Ходит игрок: ' + prop.hist.at(-1).player)
+							)}
+				</span>
+				<History updateHist={prop.updateHist} hist={prop.hist}/>
+		</div>);
+	}
+
+export function History (prop) {
+		const handleButton = (id: number) => {
+			prop.updateHist(id, true);
+		};
+
+		return (
+			<div className='history'>
+					<ol>
+							{prop.hist.map((item: GameStep, index: number) => 
+								<li key={index}>
+										<button onClick={() => handleButton(index)}>
+									go to game 
+										{index === 0 ? ' start': ' move #' + index}
+										</button>
+								</li>)}
+					 </ol>
+				</div>
+		)
+	}
+
 // Всё приложение
-export const App = () => {
+export function App () {
 	return (
   		<div className="App" role="appcontainer">
       		<Game />
